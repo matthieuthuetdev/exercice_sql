@@ -41,6 +41,18 @@ WHERE
 
 /* 5. Sélectionner la date de dépôt, la date de fin prévue, les superficies, le prix de tous les projets 
  avec le nom du client et le nom de l'architecte associés au projet */
+SELECT
+    projets.projet_date_depot,
+    projets.projet_date_fin_prevue,
+    projets.projet_superficie_totale,
+    projets.projet_prix,
+    clients.client_nom,
+    employes.emp_nom
+FROM
+    clients
+    INNER JOIN projets ON projets.client_ref = clients.client_ref
+    INNER JOIN emloyes ON projets.emp_matricule = employes.emp_matricule;
+
 /* 6. Sélectionner tous les projets (dates, superficies, prix) avec le nombre d'intervenants autres que le client et l'architecte */
 /* 7. Sélectionner les types de projets avec, pour chacun d'entre eux, le nombre de projets associés et le prix moyen pratiqué */
 /* 8. Sélectionner les types de travaux avec, pour chacun d'entre eux, la superficie du projet la pls grande */
