@@ -90,4 +90,5 @@ GROUP BY
     projets.type_travaux_id;
 
 /* 9. Sélectionner l'ensembles des projets (dates, prix) avec les informations du client (nom, telephone, adresse), le type de travaux et le type de projet. */
+
 /* 10. Sélectionner les projets dont l'adresse est identique au client associé */
