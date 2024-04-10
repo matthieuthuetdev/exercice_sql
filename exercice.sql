@@ -54,7 +54,40 @@ FROM
     INNER JOIN emloyes ON projets.emp_matricule = employes.emp_matricule;
 
 /* 6. Sélectionner tous les projets (dates, superficies, prix) avec le nombre d'intervenants autres que le client et l'architecte */
+SELECT
+    projets.projet_ref,
+    count(participer.emp_matricule) as ' nb employe',
+    projets.projet_date_depot,
+    projets.projet_date_fin_prevue,
+    projets.projet_superficie_totale,
+    projets.projet_prix
+FROM
+    employes
+    INNER JOIN participer ON participer.emp_matricule = employes.emp_matricule
+    INNER JOIN projets ON projets.projet_ref = participer.projet_ref
+group by
+    projets.projet_ref;
+
 /* 7. Sélectionner les types de projets avec, pour chacun d'entre eux, le nombre de projets associés et le prix moyen pratiqué */
+SELECT
+    type_projets.type_projet_libelle,
+    COUNT(projets.projet_ref) AS 'nb_projet',
+    AVG(projets.projet_prix) AS 'prix_moy'
+FROM
+    projets
+    INNER JOIN type_projets ON type_projets.type_projet_id = projets.type_projet_id
+GROUP BY
+    projets.type_projet_id;
+
 /* 8. Sélectionner les types de travaux avec, pour chacun d'entre eux, la superficie du projet la pls grande */
+SELECT
+    type_travaux.type_travaux_libelle,
+    MAX(projets.projet_superficie_totale) AS 'projet_max_sup'
+FROM
+    projets
+    INNER JOIN type_travaux on projets.type_travaux_id = type_travaux.type_travaux_id
+GROUP BY
+    projets.type_travaux_id;
+
 /* 9. Sélectionner l'ensembles des projets (dates, prix) avec les informations du client (nom, telephone, adresse), le type de travaux et le type de projet. */
 /* 10. Sélectionner les projets dont l'adresse est identique au client associé */
