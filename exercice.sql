@@ -90,5 +90,38 @@ GROUP BY
     projets.type_travaux_id;
 
 /* 9. Sélectionner l'ensembles des projets (dates, prix) avec les informations du client (nom, telephone, adresse), le type de travaux et le type de projet. */
+SELECT
+    projets.projet_date_depot,
+    projets.projet_date_fin_prevue,
+    projets.projet_date_fin_effective,
+    projets.projet_prix,
+    clients.client_nom,
+    clients.client_telephone,
+    adresses.adresse_code_postal,
+    adresses.adresse_ville,
+    adresses.adresse_num_voie,
+    adresses.adresse_voie,
+    type_travaux.type_travaux_libelle,
+    type_projets.type_projet_libelle
+FROM
+    projets NATURAL
+    JOIN type_projets NATURAL
+    JOIN type_travaux
+    INNER JOIN clients ON projets.client_ref = clients.client_ref
+    INNER JOIN adresses ON adresses.adresse_id = clients.adresse_id;
 
 /* 10. Sélectionner les projets dont l'adresse est identique au client associé */
+SELECT
+    projets.projet_ref,
+    clients.client_nom,
+    projets.projet_date_fin_prevue,
+    adresses.adresse_code_postal,
+    adresses.adresse_ville,
+    adresses.adresse_num_voie,
+    adresses.adresse_voie
+FROM
+    adresses NATURAL
+    JOIN projets
+    inner join clients on clients.client_ref = projets.client_ref
+where
+    clients.adresse_id = projets.adresse_id;
